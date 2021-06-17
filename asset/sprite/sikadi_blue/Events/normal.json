@@ -1,0 +1,38 @@
+{
+    "talk1":{
+        "req":[],
+        "content":"我的头发很长，很好看？啊，嗯，谢谢......要不要摸摸看？我的头发还是挺柔软的。这方面，我还算是有些自信的哦。",
+        "state":"Idle",
+        "emotion":"Normal",
+        "duration":500,
+        "flag_add":[],
+        "flag_remove":[],
+        "trust":0,
+        "options":[
+            {
+                "option":"摸爆",
+                "next":"angry"
+            },
+            {
+                "option":"摸摸头",
+                "req":["love"],
+                "next":"talk1.1"
+            },
+            { "option":"......"}
+        ]
+    },
+    "talk1.1":{
+        "req":["No"],
+        "emotion":"Shy",
+        "duration":100,
+        "state":"Interact",
+        "content":"啊......帽子！"
+    },
+    "angry":{
+        "req":["No"],
+        "emotion":"Angry",
+        "duration":150,
+        "content":"别眨眼，你会错过自己的死状。",
+        "state":"Attack"
+    }
+}
