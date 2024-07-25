@@ -27,6 +27,9 @@ class EventManager():
     def loadEvents(self):
         listdir = os.listdir(self.event_dir)
         for d in listdir:
+            if(d[0]=="_"):
+                continue
+
             file_path = os.path.join(self.event_dir,d)
             print(file_path)
             with open(file_path, encoding='UTF-8') as f:
@@ -38,10 +41,10 @@ class EventManager():
         """
         判断事件是否能够执行
         """
-        if ("req" not in event) or (len(event["req"])==0):
+        if ("flag" not in event) or (len(event["flag"])==0):
             return True
 
-        for r in event["req"]:
+        for r in event["flag"]:
             if r== "No":
                 return False
             if r not in self.achieve.flags:
@@ -51,7 +54,7 @@ class EventManager():
     def getRandomEvent(self):
         OK = False
         while not OK:
-            event_key = random.sample(self.events.keys(),1)[0]
+            event_key = random.sample(list(self.events.keys()),1)[0]
             event = self.events[event_key]
             if self.isOk(event):
                 if "options" not in event:

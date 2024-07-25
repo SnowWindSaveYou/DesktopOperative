@@ -1,0 +1,7 @@
+pyqt5
+PyQtWebEngine
+typing_extensions
+
+langchain 
+sentence_transformers 
+chromadb   
