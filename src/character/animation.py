@@ -1,8 +1,9 @@
 from genericpath import isfile
 from PyQt5 import QtGui
-import os,sys
+import os
+import sys
 
-IMAGES_DIR = "Images"
+from src.utils.constants import IMAGES_DIR
 
 
 class Animation():
@@ -76,4 +77,5 @@ class Animation():
 
 
 if __name__ =="__main__":
-    sp = Animation("asset\sprite\sikadi_blue")
+    from src.utils.constants import CHARACTERS_DIR
+    sp = Animation(os.path.join(CHARACTERS_DIR, "sikadi_blue"))

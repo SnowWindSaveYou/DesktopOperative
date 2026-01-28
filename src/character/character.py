@@ -2,20 +2,16 @@ import os
 import random
 from typing_extensions import runtime
 from PyQt5.QtCore import QPoint, pyqtSignal
-import sprite
-import dialog
-import event_manager
-SOUND_FILE = "Sound"
-IDLE_STATE = "Idle"
-START_STATE = "Start"
-MOVE_STATE = "Move"
-INTERACT_STATE = "Interact"
-SPERITE_DIR = "./asset/sprite/sikadi_blue"
 
-NORMAL_EMOTION = "Normal"
-Angry_EMOTION = "Angry"
+from src.character import sprite
+from src.ui.dialog import dialog
+from src.event import event_manager
+from src.utils.constants import (
+    SOUND_FILE, IDLE_STATE, START_STATE, MOVE_STATE, INTERACT_STATE,
+    NORMAL_EMOTION, ANGRY_EMOTION
+)
 
-class Character(sprite.Sperite):
+class Character(sprite.Sprite):
     on_event_complete= pyqtSignal(int)
     def __init__(self, menu, name, w=300, h=300, parent=None, **kwargs):
         super().__init__(menu=menu, name=name, w=w, h=h, parent=parent, **kwargs)
@@ -23,8 +19,17 @@ class Character(sprite.Sperite):
         self.dia = None
         self.event = -1
         self.emotion= NORMAL_EMOTION
-        self.event_manager = event_manager.EventManager(os.path.join("./achieves","%s.json"%str(name)),self.sprite_dir)
+        from src.utils.constants import BASE_DIR, CHARACTER_DATA_DIR
+        self.event_manager = event_manager.EventManager(
+            os.path.join(CHARACTER_DATA_DIR, "%s.json" % str(name)), 
+            self.sprite_dir
+        )
         self.on_event_complete.connect(self.onEventCompelete)
+        
+        # 从配置读取随机事件触发概率
+        from src.core.config import Config
+        self.config = Config()
+        self.random_event_chance = self.config.get('character.random_event_chance', 0.1)
     def runTime(self):
         # 运行过程
         frame_state = self.anim.update(self.state)
@@ -33,7 +38,7 @@ class Character(sprite.Sperite):
         elif frame_state["isEnd"]:
             if( (self.state not in [MOVE_STATE,START_STATE])
                 and (self.event ==-1) 
-                and (random.random()>0.5)):
+                and (random.random() > self.random_event_chance)):
                 self.randomEvent()
             else:
                 self.state = IDLE_STATE

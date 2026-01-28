@@ -1,0 +1,38 @@
+# 应用程序配置
+app:
+  name: "Desktop Pet"
+  version: "2.0.0"
+  debug: false
+
+# 窗口配置
+window:
+  width: 300
+  height: 300
+  transparent: true
+  always_on_top: true
+
+# 动画配置
+animation:
+  interval: 125  # 毫秒
+  preload: true
+  
+# 角色行为配置
+character:
+  # 随机事件触发概率（0.0-1.0）
+  # 0.1 = 10% 概率触发随机对话
+  # 0.05 = 5% 概率触发随机对话（更安静）
+  # 0.2 = 20% 概率触发随机对话（更活跃）
+  random_event_chance: 0.1
+
+# 资源配置
+resources:
+  characters_dir: "assets/characters"
+  ui_icons_dir: "assets/ui/icons"
+  data_dir: "data"
+
+# 日志配置
+logging:
+  level: "INFO"
+  file: "logs/app.log"
+  max_size: "10MB"
+  backup_count: 5

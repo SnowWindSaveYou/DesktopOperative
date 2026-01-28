@@ -4,11 +4,19 @@ from PyQt5 import QtCore
 
 from PyQt5 import QtWebEngineWidgets
 from PyQt5.QtCore import QPoint, QThread, QTime, QTimer, Qt, pyqtSignal
-from functools import partial  
+from functools import partial
+
+from src.utils.constants import (
+    DEFAULT_DIALOG_WIDTH, DEFAULT_DIALOG_HEIGHT, DEFAULT_DIALOG_DURATION,
+    DIALOG_BACKGROUND_COLOR, DIALOG_TEXT_COLOR, DIALOG_BORDER_COLOR,
+    DIALOG_OPACITY
+)
 
 
 class Dialog(QtWidgets.QDialog):
-    def __init__(self,content,options,pos,signal,duration=500,w=200,h=80,**kwargs):
+    def __init__(self,content,options,pos,signal,
+                 duration=DEFAULT_DIALOG_DURATION,
+                 w=DEFAULT_DIALOG_WIDTH,h=DEFAULT_DIALOG_HEIGHT,**kwargs):
         super(Dialog, self).__init__()
         self.signal = signal
         self.duration= duration
@@ -16,7 +24,7 @@ class Dialog(QtWidgets.QDialog):
         # 设置样式
         self.resize(w,h)
         self.setWindowFlags(Qt.FramelessWindowHint|Qt.WindowStaysOnTopHint|Qt.SubWindow)
-        self.setWindowOpacity(0.85)
+        self.setWindowOpacity(DIALOG_OPACITY)
         self.setContentsMargins(0, 0, 0, 0)
         self.setObjectName("EventDialog")
         # self.setStyleSheet("background-color:black; color:white;margin:0;font-size:11px;")

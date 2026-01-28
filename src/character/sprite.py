@@ -1,5 +1,7 @@
-
-import sys,random,os,math
+import sys
+import random
+import os
+import math
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui
 from PyQt5 import QtCore
@@ -7,19 +9,15 @@ from PyQt5 import QtCore
 from PyQt5 import QtWebEngineWidgets
 from PyQt5.QtCore import QTime, QTimer, Qt, pyqtSignal
 
+from src.character import animation
+from src.ui.dialog import dialog
+from src.utils.constants import (
+    SOUND_FILE, IDLE_STATE, START_STATE, MOVE_STATE, INTERACT_STATE,
+    CHARACTERS_DIR, DEFAULT_PET_WIDTH, DEFAULT_PET_HEIGHT, 
+    DEFAULT_ANIMATION_INTERVAL
+)
 
-
-import animation
-import dialog
-
-SOUND_FILE = "Sound"
-IDLE_STATE = "Idle"
-START_STATE = "Start"
-MOVE_STATE = "Move"
-INTERACT_STATE = "Interact"
-SPERITE_DIR = "./asset/sprite/sikadi_blue"
-
-class Sperite(QtWidgets.QWidget):
+class Sprite(QtWidgets.QWidget):
     long_pressed = pyqtSignal()
     def __init__(self,  menu=None, name=None,
                         w=300,h=300, 
@@ -33,9 +31,9 @@ class Sperite(QtWidgets.QWidget):
         self.state = START_STATE
         self.isHold = False
         self.mouse_pos = None
-        self.sprite_dir = os.path.join("./asset/sprite",name)
+        self.sprite_dir = os.path.join(CHARACTERS_DIR, name)
 
-        self.interval = 125
+        self.interval = DEFAULT_ANIMATION_INTERVAL
 
         # 设置透明窗口
         self.setWindowFlags(Qt.FramelessWindowHint|Qt.WindowStaysOnTopHint|Qt.SubWindow)
@@ -82,8 +80,9 @@ class Sperite(QtWidgets.QWidget):
 
     def setMenu(self):
         # 退出按钮
+        from src.utils.constants import UI_ICONS_DIR
         quite_act = QtWidgets.QAction('%s Exit'%(self.name),self,triggered=self.quit)
-        quite_act.setIcon(QtGui.QIcon("./asset/gui/close.png"))
+        quite_act.setIcon(QtGui.QIcon(os.path.join(UI_ICONS_DIR, "close.png")))
         self.menu.addAction(quite_act)
 
     def mousePressEvent(self, e):
@@ -139,5 +138,5 @@ class Sperite(QtWidgets.QWidget):
 
 # if __name__ =="__main__":
 #     app = QtWidgets.QApplication(sys.argv)
-#     widget = Sperite("./asset/sprite/sikadi_blue")
+#     widget = Sprite(os.path.join(CHARACTERS_DIR, "sikadi_blue"))
 #     sys.exit(app.exec())

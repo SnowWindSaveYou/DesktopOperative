@@ -1,0 +1,37 @@
+# AI配置
+ai:
+  enabled: false  # 暂时禁用，等集成时启用
+  
+  # LLM配置
+  llm:
+    provider: "openai"  # openai, claude, local
+    model: "gpt-3.5-turbo"
+    api_key: ""
+    base_url: ""
+    max_tokens: 150
+    temperature: 0.7
+    
+  # 个性化配置
+  personality:
+    character_name: "丝卡蒂"
+    personality_traits:
+      - "冷静"
+      - "专业"
+      - "略带疏离感"
+      - "可靠"
+    speech_style: "简洁直接"
+    
+  # 记忆系统
+  memory:
+    short_term_size: 10
+    long_term_enabled: false
+    memory_file: "data/ai/memory.json"
+    
+  # 对话管理
+  dialogue:
+    context_window: 5
+    response_timeout: 30
+    fallback_responses:
+      - "..."
+      - "有什么事吗？"
+      - "我在听。"

@@ -1,7 +1,11 @@
-import os,json,random
+import os
+import json
+import random
 
 from PyQt5.QtCore import pyqtSignal
-import dialog
+from src.ui.dialog import dialog
+from src.utils.constants import EVENTS_DIR
+
 """
 通过当前角色的flag过滤可执行的事件
 on:[条件] 
@@ -14,7 +18,7 @@ class EventManager():
     
     def __init__(self,achieve_dir,sprite_dir) -> None:
         self.achieve_dir = achieve_dir
-        self.event_dir = os.path.join(sprite_dir,"Events")
+        self.event_dir = os.path.join(sprite_dir, EVENTS_DIR)
 
         self.events = dict()
         self.loadAchieve()
